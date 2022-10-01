@@ -7,21 +7,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/*
+ * Model class for employee
+ */
 @Entity
 @Table(name = "employee")
 public class Employee {
 
+	//Employee Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long empId;
+    //First name
     @Column(name = "first_name" , nullable = false)
     private String firstName;
+    //Last name
     @Column(name = "last_name" , nullable = false)
     private String lastName;
+    //Department
     @Column(name = "department" , nullable = false)
     private String department;
+    //Job level
     @Column(name = "job_level" , nullable = false)
     private String jobLevel;
+    //Email
     @Column(name = "email" , nullable = false)
     private String email;
 

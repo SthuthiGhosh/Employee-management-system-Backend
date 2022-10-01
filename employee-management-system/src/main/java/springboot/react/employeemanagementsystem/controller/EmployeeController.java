@@ -20,34 +20,38 @@ import springboot.react.employeemanagementsystem.exception.ResourceNotFoundExcep
 import springboot.react.employeemanagementsystem.model.Employee;
 import springboot.react.employeemanagementsystem.repository.EmployeeRepository;
 
+/*
+ * Controller class 
+ */
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/")
 public class EmployeeController {
 
+	//instance for employee repository
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // List employee
+    // Method to list all employee
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    // Create employee
+    // Method to create employee
     @PostMapping("/employees")
     public Employee createEmployee(@RequestBody Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    // Get employee by id
+    // Method to get employee by id
     @GetMapping("/employees/{id}")
     public ResponseEntity<Employee> getEmployeeByid(@PathVariable long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
         return ResponseEntity.ok(employee);
     }
 
-    // Get employee by id
+    // Method to get employee by id
     @PutMapping("/employees/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable long id, @RequestBody Employee employeeDetails) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
@@ -56,11 +60,12 @@ public class EmployeeController {
         employee.setDepartment(employeeDetails.getDepartment());
         employee.setEmail(employeeDetails.getEmail());
         employee.setJobLevel(employeeDetails.getJobLevel());
+        //Save updated employee
         Employee updatedEmployee = employeeRepository.save(employee);
         return ResponseEntity.ok(updatedEmployee);
     }
 
-    // Delete employee
+    // Method to delete employee
     @DeleteMapping("/employees/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
